@@ -28,6 +28,7 @@
 #include "LeastSquare.h"
 #include "xy_function.h"
 #include "datatype_transform.h"
+#include "vector_function.h"
 #endif
 
 

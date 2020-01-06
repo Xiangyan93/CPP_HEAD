@@ -11,3 +11,16 @@ bool NoRepeat(std::vector<Type> value)
   }
   return true;
 }
+
+//This is function to find the position of a element in a vector. 
+template <class Type>
+bool FindIdxInVector(Type value, std::vector<Type> value_list, unsigned &idx)
+{
+  for(unsigned i=0;i<value_list.size();++i){
+    if(value==value_list[i]){
+      idx = i;
+      return true;
+    }
+  }
+  return false;
+}
