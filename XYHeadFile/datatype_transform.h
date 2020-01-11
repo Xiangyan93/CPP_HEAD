@@ -52,7 +52,7 @@ template <class Type>
 std::vector <int> anything2int(std::vector <Type> in_list)
 {
 	std::vector <int> out_list;
-	for(unsigned int i=0;i<in_list;++i){
+	for(unsigned int i=0;i<in_list.size();++i){
 		out_list.push_back(anything2int(in_list[i]));
 	}
 	return out_list;
@@ -62,7 +62,7 @@ template <class Type>
 std::vector <unsigned int> anything2usint(std::vector <Type> in_list)
 {
 	std::vector <unsigned int> out_list;
-	for(unsigned int i=0;i<in_list;++i){
+	for(unsigned int i=0;i<in_list.size();++i){
 		out_list.push_back(anything2int(in_list[i]));
 	}
 	return out_list;
@@ -72,7 +72,7 @@ template <class Type>
 std::vector <double> anything2double(std::vector <Type> in_list)
 {
 	std::vector <double> out_list;
-	for(unsigned int i=0;i<in_list;++i){
+	for(unsigned int i=0;i<in_list.size();++i){
 		out_list.push_back(anything2double(in_list[i]));
 	}
 	return out_list;
@@ -82,7 +82,7 @@ template <class Type>
 std::vector <bool> anything2bool(std::vector <Type> in_list)
 {
 	std::vector <bool> out_list;
-	for(unsigned int i=0;i<in_list;++i){
+	for(unsigned int i=0;i<in_list.size();++i){
 		out_list.push_back(anything2bool(in_list[i]));
 	}
 	return out_list;
