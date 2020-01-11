@@ -1,16 +1,6 @@
 #ifndef XYFUNC_h
 #define XYFUNC_h
-// vector++;
-void VectorPlusOne(std::vector <unsigned> &state, const std::vector<unsigned> scale)
-{
-	state[0] += 1;
-	for (unsigned i = 0;i < state.size();++i) {
-		if (state[i] == scale[i]) {
-			state[i] = 0;
-			state[i + 1] += 1;
-		}
-	}
-}
+
 void right_fprintf(FILE *fp, std::string line, unsigned n) {
 	if (n > 20) {
 		error("function: right_fprintf(FILE *fp, string line, unsigned n) can be used only for n <=20\n");
@@ -177,15 +167,7 @@ Type GetMax(std::vector <Type> value,unsigned &a)
   return max;
 }
 //get product
-template <class Type>
-Type GetProduct(std::vector <Type> value)
-{
-  Type a=1;
-  for(unsigned i=0;i<value.size();++i){
-    a *= value[i];
-  }
-  return a;
-}
+
 //get sum
 template <class Type>
 Type GetSum(std::vector <Type> value)

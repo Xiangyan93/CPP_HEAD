@@ -30,6 +30,3 @@
 #include "datatype_transform.h"
 #include "vector_function.h"
 #endif
-
-
-
