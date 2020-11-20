@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 #include <iostream>
 #include <sstream>
 #include <cmath>
@@ -26,6 +27,7 @@
 #include "arrayOperator.h"
 //least square fitting
 #include "LeastSquare.h"
+#include "hash.h"
 #include "xy_function.h"
 #include "datatype_transform.h"
 #include "vector_function.h"
