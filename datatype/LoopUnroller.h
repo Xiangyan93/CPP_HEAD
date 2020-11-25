@@ -71,6 +71,12 @@ public:
 /// Dot product of d and v
 /// Same as `r=0.0; for(unsigned i=0;i<n;i++) r+=d[i]*v[i]; return r;`
   static double _dot(const double*d,const double*v);
+/// count
+  static unsigned _count(const double*d);
+/// vector multiply
+  static void _mul2(double*d,const double*v);
+/// vector multiply
+  static void _div(double*d,const double*v);
 };
 
 template<unsigned n>
@@ -153,6 +159,41 @@ template<>
 inline
 double LoopUnroller<1>::_dot(const double*d,const double*v){
   return d[0]*v[0];
+}
+
+template<unsigned n>
+unsigned LoopUnroller<n>::_count(const double*d){
+  return LoopUnroller<n-1>::_count(d) + 1;
+}
+
+template<>
+inline
+unsigned LoopUnroller<1>::_count(const double*d){
+  return 1;
+}
+
+template<unsigned n>
+void LoopUnroller<n>::_mul2(double*d,const double*v){
+  LoopUnroller<n-1>::_mul2(d,v);
+  d[n-1]*=v[n-1];
+}
+
+template<>
+inline
+void LoopUnroller<1>::_mul2(double*d,const double*v){
+  d[0]*=v[0];
+}
+
+template<unsigned n>
+void LoopUnroller<n>::_div(double*d,const double*v){
+  LoopUnroller<n-1>::_div(d,v);
+  d[n-1]/=v[n-1];
+}
+
+template<>
+inline
+void LoopUnroller<1>::_div(double*d,const double*v){
+  d[0]/=v[0];
 }
 
 /*}*/

@@ -90,6 +90,8 @@ public:
   VectorGeneric(double,double,double,double);
 /// create it null
   VectorGeneric();
+/// return length
+  unsigned length();
 /// set it to zero
   void zero();
 /// array-like access [i]
@@ -106,8 +108,12 @@ public:
   VectorGeneric& operator -=(const VectorGeneric& b);
 /// multiply
   VectorGeneric& operator *=(double s);
+/// multiply vector
+  VectorGeneric& operator *=(const VectorGeneric& v);
 /// divide
   VectorGeneric& operator /=(double s);
+/// divide vector
+  VectorGeneric& operator /=(const VectorGeneric& v);
 /// sign +
   VectorGeneric operator +()const;
 /// sign -
@@ -124,9 +130,15 @@ public:
 /// return v*s
   template<unsigned m>
   friend VectorGeneric<m> operator*(const VectorGeneric<m>&,double);
+/// return v*v
+  template<unsigned m>
+  friend VectorGeneric<m> operator*(const VectorGeneric<m>&,const VectorGeneric<m>&);
 /// return v/s
   template<unsigned m>
   friend VectorGeneric<m> operator/(const VectorGeneric<m>&,double);
+/// return v/v
+  template<unsigned m>
+  friend VectorGeneric<m> operator/(const VectorGeneric<m>&,const VectorGeneric<m>&);
 /// return v2-v1
   template<unsigned m>
   friend VectorGeneric<m> delta(const VectorGeneric<m>&v1,const VectorGeneric<m>&v2);
@@ -190,6 +202,11 @@ VectorGeneric<n>::VectorGeneric(){
 }
 
 template <unsigned n>
+unsigned VectorGeneric<n>::length(){
+  return n;
+}
+
+template <unsigned n>
 double & VectorGeneric<n>::operator[](unsigned i){
 #ifdef _GLIBCXX_DEBUG
   plumed_assert(i<n);
@@ -240,8 +257,20 @@ VectorGeneric<n>& VectorGeneric<n>::operator *=(double s){
 }
 
 template <unsigned n>
+VectorGeneric<n>& VectorGeneric<n>::operator *=(const VectorGeneric<n>& v){
+  LoopUnroller<n>::_mul2(d,v.d);
+  return *this;
+}
+
+template <unsigned n>
 VectorGeneric<n>& VectorGeneric<n>::operator /=(double s){
   LoopUnroller<n>::_mul(d,1.0/s);
+  return *this;
+}
+
+template <unsigned n>
+VectorGeneric<n>& VectorGeneric<n>::operator /=(const VectorGeneric<n>& v){
+  LoopUnroller<n>::_div(d,v.d);
   return *this;
 }
 
@@ -276,6 +305,13 @@ VectorGeneric<n> operator*(double s,const VectorGeneric<n>&v){
 }
 
 template <unsigned n>
+VectorGeneric<n> operator*(const VectorGeneric<n>& v1,const VectorGeneric<n>& v2){
+ VectorGeneric<n> vv(v1);
+ VectorGeneric<n> vv_(v2);
+ return vv*=vv_;
+}
+
+template <unsigned n>
 VectorGeneric<n> operator*(const VectorGeneric<n>&v,double s){
   return s*v;
 }
@@ -283,6 +319,13 @@ VectorGeneric<n> operator*(const VectorGeneric<n>&v,double s){
 template <unsigned n>
 VectorGeneric<n> operator/(const VectorGeneric<n>&v,double s){
   return v*(1.0/s);
+}
+
+template <unsigned n>
+VectorGeneric<n> operator/(const VectorGeneric<n>& v1,const VectorGeneric<n>& v2){
+ VectorGeneric<n> vv(v1);
+ VectorGeneric<n> vv_(v2);
+ return vv/=vv_;
 }
 
 template <unsigned n>

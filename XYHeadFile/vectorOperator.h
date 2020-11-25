@@ -1,19 +1,26 @@
 #pragma once
+#include <regex>
+
+
 //split a vector using split symbol "pattern"; return a vector of string
-std::vector<std::string> split(std::string str, std::string pattern)
-{
-	std::vector<std::string> ret;
-	if (pattern.empty()) return ret;
-	size_t start = 0, index = str.find_first_of(pattern, 0);
-	while(index!=str.npos) {
-	  if (start != index)
-		  ret.push_back(str.substr(start, index - start));
-	  start = index + 1;
-	  index = str.find_first_of(pattern, start);
+std::vector <std::string> split(const std::string & s, std::string rgx_str = "\\s+") {
+	std::vector<std::string> elems;
+
+	std::regex rgx (rgx_str);
+
+	std::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
+	std::sregex_token_iterator end;
+
+	while (iter != end)  {
+		//std::cout << "S43:" << *iter << std::endl;
+		elems.push_back(*iter);
+		if (elems.back().length() == 0) {
+			elems.pop_back();
+		}
+		++iter;
 	}
-	if (!str.substr(start).empty())
-		ret.push_back(str.substr(start));
-	return ret;
+
+	return elems;
 }
 
 //itoa
