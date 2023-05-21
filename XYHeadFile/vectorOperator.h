@@ -2,25 +2,20 @@
 #include <regex>
 
 
-//split a vector using split symbol "pattern"; return a vector of string
-std::vector <std::string> split(const std::string & s, std::string rgx_str = "\\s+") {
-	std::vector<std::string> elems;
-
-	std::regex rgx (rgx_str);
-
-	std::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
-	std::sregex_token_iterator end;
-
-	while (iter != end)  {
-		//std::cout << "S43:" << *iter << std::endl;
-		elems.push_back(*iter);
-		if (elems.back().length() == 0) {
-			elems.pop_back();
-		}
-		++iter;
-	}
-
-	return elems;
+std::vector<std::string> split(const std::string& str, const std::string& delimiters) {
+    std::vector<std::string> splitStrings;
+    size_t prev = 0;
+    size_t next = 0;
+    while ((next = str.find_first_of(delimiters, prev)) != std::string::npos) {
+        if (next - prev != 0) {
+            splitStrings.push_back(str.substr(prev, next - prev));
+        }
+        prev = next + 1;
+    }
+    if (prev < str.size()) {
+        splitStrings.push_back(str.substr(prev));
+    }
+    return splitStrings;
 }
 
 //itoa
